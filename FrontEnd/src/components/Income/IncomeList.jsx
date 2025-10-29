@@ -3,7 +3,13 @@ import TransactionInfoCard from "../Cards/TransactionInfoCard";
 import { LuDownload } from "react-icons/lu";
 
 const IncomeList = (props) => {
-    const { transactions, onDelete, onDownload } = props;
+    const { transactions, categories, onDelete, onDownload } = props;
+    
+    const getCategoryIcon = (categoryId) => {
+        const category = categories.find((cat) => cat._id === categoryId);
+        console.log("Category for ID", categoryId, ":", category);
+        return category?.icon || "💰"
+    };
 
     return (
         <div className="card">
@@ -17,10 +23,11 @@ const IncomeList = (props) => {
 
             <div className="grid grid-cols-1 mg:grid-cols-2">
                 {transactions?.map((income) => (
+                    console.log("Rendering income transaction:", income),
                     <TransactionInfoCard
                         key={income._id}
                         title={income.source}
-                        icon={income.icon}
+                        icon={getCategoryIcon(income.categoryId)}
                         date={moment(income.date).format("Do MMM YYYY")}
                         amount={income.amount}
                         type="income"

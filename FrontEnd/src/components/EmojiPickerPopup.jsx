@@ -7,19 +7,34 @@ const EmojiPickerPopup = (props) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
+    const isUrl = icon && icon.startsWith("http");
+
     return (
         <div className="flex flex-col md:flex-row items-center gap-5 mb-6">
             <div
                 className="flex items-center gap-4 cursor-pointer"
                 onClick={() => setIsOpen(true)}
             >
-                <div className="w-12 h-12 flex items-center justify-center text-2xl bg-purple-50 text-primary rounded-lg">
-                    {icon ? (
+                <div className="w-10 h-10 flex items-center justify-center text-2xl bg-purple-50 text-primary rounded-lg">
+                    {/* {icon ? (
                         <img
                             src={icon}
                             alt="Icon"
-                            className="w-12 h-12"
+                            className="w-14 h-14"
                         />
+                    ) : (
+                        <LuImage />
+                    )} */}
+                    {icon ? (
+                        isUrl ? (
+                            <img
+                                src= {icon}
+                                alt="Icon"
+                                className="w-14 h-14"
+                            />
+                        ) : (
+                            <span className='text-3xl' >{icon}</span>
+                        ) 
                     ) : (
                         <LuImage />
                     )}
@@ -41,7 +56,7 @@ const EmojiPickerPopup = (props) => {
 
                     <EmojiPicker
                         open={isOpen}
-                        onEmojiClick={(emoji) => onSelect(emoji?.imageUrl || "")}
+                        onEmojiClick={(emojiData) => onSelect(emojiData?.emoji || "")}
                     />
                 </div>
             )}

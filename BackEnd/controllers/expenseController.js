@@ -1,4 +1,4 @@
-const XLSX = require("xlsx");
+const ExcelJS = require("exceljs");
 const Expense = require("../models/Expense");
 
 // Add Expense
@@ -71,24 +71,57 @@ exports.deleteExpenseWithID = async (req, res) => {
 // Download Expense as Excel
 exports.downloadExpenseExcel = async (req, res) => {
   const userId = req.user.id;
+
   try {
     const expense = await Expense.find({ userId }).sort({ date: -1 });
 
-    const data = expense.map((item) => ({
-      Category: item.category,
-      Amount: item.amount,
-      Date: item.date.toISOString().split("T")[0],
-    }));
+    if (!expense.length) {
+      return res.status(400).json({ message: "No expense data no found" });
+    };
+    // Tạo workbook và workSheet
+    const workBook = new ExcelJS.WorkBook();
+    const sheet = workBook.addWorksheet("Expense");
 
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(data);
-    XLSX.utils.book_append_sheet(wb, ws, "Expense");
-    XLSX.writeFile(wb, "expense_details.xlsx");
-    res.download("expense_details.xlsx");
+    // 🧠 Tạo header
+    sheet.columns = [
+      { header: "Soruce", key: "soruce", width: 30 },
+      { header: "Amount", key: "amount", width: 15 },
+      { header: "Date", key: "date", width: 20 },
+    ];
+    // Thêm dữ liệu vào Sheet 
+    expense.forEach((item) => {
+      sheet.addRow({
+        category: item.category,
+        source: item.source,
+        amount: item.amount,
+        date: item.date.toISOString().split("T")[0],
+      });
+    });
+
+    // Format header 
+    sheet.getRow(1).eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = { vertical: "middle", horizontal: "center" };
+    });
+  
+    // 📁 Tạo file Excel tạm trong thư mục `exports`
+    const filePath = path.join(__dirname, "../exports/expense_details.xlsx");
+    await workbook.xlsx.writeFile(filePath);
+      // 📤 Gửi file về client
+    res.download(filePath, "Expense_details.xlsx", (err) => {
+      if (err) {
+        console.error("❌ Error sending file:", err);
+        return res.status(500).send("Error downloading file");
+      }
+      // ✅ Xóa file sau khi gửi xong
+      fs.unlink(filePath, () => {});
+    });
   } catch (error) {
+    console.error("❌ Export error:", error);
     res.status(500).json({
-      message: "Error downloading expense Excel",
+      message: "Error downloading Expense Excel",
       error: error.message,
     });
   }
 };
+

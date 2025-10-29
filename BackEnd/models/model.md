@@ -32,7 +32,6 @@ entity "EXPENSE" as EXPENSE {
     --
     userId : ObjectId <<FK>>
     categoryId : ObjectId <<FK>>
-    icon : string
     amount : number
     date : date
     createdAt : date
@@ -45,7 +44,6 @@ entity "INCOME" as INCOME {
     userId : ObjectId <<FK>>
     categoryId : ObjectId <<FK>>
     source : string
-    icon : string
     amount : number
     date : date
     createdAt : date

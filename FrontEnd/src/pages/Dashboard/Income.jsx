@@ -21,6 +21,21 @@ const IncomePage = () => {
     });
     const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
 
+    const [categories, setCategories] = useState([]);
+
+    // 🟢 Fetch categories (Income only)
+    const fetchCategories = async () => {
+    try {
+        const response = await axiosInstance.get(API_PATHS.CATEGORY.GET_ALL_CATEGORY);
+        const incomeCats = response.data.filter((cat) => cat.type === "Income");
+        setCategories(incomeCats);
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to load categories");
+    }
+    };
+
+
     // Get All Income Transactions
     const fetchIncomeTransactions = async () => {
         if (loading) return;
@@ -28,7 +43,6 @@ const IncomePage = () => {
 
         try {
             const response = await axiosInstance.get(API_PATHS.INCOME.GET_ALL_INCOME);
-
             if (response.data) {
                 setIncomeData(response.data);
             }
@@ -41,8 +55,13 @@ const IncomePage = () => {
 
     // Handle Add Income
     const handleAddIncome = async (income) => {
-        const { source, amount, date, icon } = income;
+        const { categoryId, source, amount, date } = income;
         // Validation Checks
+        if(!categoryId) {
+            toast.error("Please select a category!");
+            return;
+        }
+
         if (!source.trim()) {
             toast.error("Source is required!");
             return;
@@ -60,12 +79,11 @@ const IncomePage = () => {
 
         try {
             await axiosInstance.post(API_PATHS.INCOME.ADD_INCOME, {
+                categoryId,
                 source,
                 amount: Number(amount),
-                date,
-                icon,
+                date
             });
-
             setOpenAddIncomeModal(false);
             toast.success("Income added successfully!");
             fetchIncomeTransactions();
@@ -110,6 +128,7 @@ const IncomePage = () => {
 
     useEffect(() => {
         fetchIncomeTransactions();
+        fetchCategories();
         return () => { };
     }, []);
 
@@ -126,6 +145,7 @@ const IncomePage = () => {
 
                     <IncomeList
                         transactions={incomeData}
+                        categories={categories}
                         onDelete={(id) => {
                             setOpenDeleteAlert({
                                 show: true,
@@ -141,7 +161,11 @@ const IncomePage = () => {
                     onClose={() => setOpenAddIncomeModal(false)}
                     title="Add Income"
                 >
-                    <AddIncomeForm onAddIncome={handleAddIncome} />
+                    <AddIncomeForm 
+                        onAddIncome={handleAddIncome}
+                        onCategoryAdded={fetchCategories}
+                        categories={categories}
+                    />
                 </Modal>
 
                 <Modal

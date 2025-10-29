@@ -102,3 +102,4 @@ exports.deleteAccount = async (req, res) => {
       .json({ message: "Error deleting account", error: error.message });
   }
 };
+

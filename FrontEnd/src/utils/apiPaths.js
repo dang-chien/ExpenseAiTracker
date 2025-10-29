@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:5000/";
+export const BASE_URL = "http://localhost:8000/";
 
 export const API_PATHS = {
   AUTH: {
@@ -26,5 +26,13 @@ export const API_PATHS = {
   },
   IMAGE: {
     UPLOAD_IMAGE: "api/v1/auth/upload-image",
+  },
+  CATEGORY: {
+    ADD_CATEGORY: "api/v1/category/add",
+    GET_ALL_CATEGORY: "api/v1/category/get",
+    GET_CATEGORY_BY_ID: (categoryId) => `api/v1/category/${categoryId}`,
+    UPDATE_CATEGORY: (categoryId) => `api/v1/category/${categoryId}`,
+    DELETE_CATEGORY: (categoryId) => `api/v1/category/${categoryId}`,
+    DELETE_ALL_CATEGORY: "api/v1/category", // route DELETE /
   },
 };

@@ -7,12 +7,9 @@ const ExpenseSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    icon: {
-      type: String,
-    },
-    category: {
-      type: String,
-      required: true,
+    caterogyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
     amount: {
       type: Number,

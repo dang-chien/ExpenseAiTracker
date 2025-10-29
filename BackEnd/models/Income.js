@@ -7,8 +7,9 @@ const IncomeSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    icon: {
-      type: String,
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
     },
     source: {
       type: String,

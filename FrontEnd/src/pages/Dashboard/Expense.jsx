@@ -20,9 +20,22 @@ const ExpensePage = () => {
         data: null,
     });
     const [openAddExpenseModal, setOpenAddExpenseModal] = useState(false);
+    const [categories, setCategories] = useState([]);
+
+     // 🟢 Fetch categories (Expense only)
+    const fetchCategories = async () => {
+    try {
+        const response = await axiosInstance.get(API_PATHS.CATEGORY.GET_ALL_CATEGORY);
+        const expenseCats = response.data.filter((cat) => cat.type === "Expense");
+        setCategories(expenseCats);
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to load categories");
+    }
+    };
 
     // Get All Expense Transactions
-    const fetchExpenseTransactions = async () => {
+    const  fetchExpenseTransactions = async () => {
         if (loading) return;
         setLoading(true);
 
@@ -40,9 +53,10 @@ const ExpensePage = () => {
     };
 
     const handleAddExpense = async (expense) => {
-        const { category, amount, date, icon } = expense;
-        if (!category.trim()) {
-            toast.error("Category is required!");
+        const { categoryId, amount, date } = expense;
+        // Validation Checks
+        if(!categoryId) {
+            toast.error("Please select a category!");
             return;
         }
 
@@ -58,12 +72,11 @@ const ExpensePage = () => {
 
         try {
             await axiosInstance.post(API_PATHS.EXPENSE.ADD_EXPENSE, {
-                category,
+                categoryId,
                 amount: Number(amount),
-                date,
-                icon,
+                date
             });
-
+            console.log(expense);
             setOpenAddExpenseModal(false);
             toast.success("Expense added successfully!");
             fetchExpenseTransactions();
@@ -108,6 +121,7 @@ const ExpensePage = () => {
 
     useEffect(() => {
         fetchExpenseTransactions();
+        fetchCategories();
         return () => { };
     }, []);
 
@@ -124,6 +138,7 @@ const ExpensePage = () => {
 
                     <ExpenseList
                         transactions={expenseData}
+                        expenseCategories={categories}
                         onDelete={(id) => {
                             setOpenDeleteAlert({
                                 show: true,
@@ -138,8 +153,10 @@ const ExpensePage = () => {
                     isOpen={openAddExpenseModal}
                     onClose={() => setOpenAddExpenseModal(false)}
                     title="Add Expense"
-                >
-                    <AddExpenseForm onAddExpense={handleAddExpense} />
+                >   
+                    <AddExpenseForm onAddExpense={handleAddExpense}
+                    onCategoryAdded = {fetchCategories}
+                    categories = {categories} />
                 </Modal>
 
                 <Modal

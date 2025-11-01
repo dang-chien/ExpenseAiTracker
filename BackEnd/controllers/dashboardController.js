@@ -30,7 +30,7 @@ exports.getDashboardData = async (req, res) => {
       (sum, transaction) => sum + transaction.amount,
       0
     );
-
+    
     // Get expense transactions in the last 30 days
     const last30DaysExpenseTransactions = await Expense.find({
       userId,

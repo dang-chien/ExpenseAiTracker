@@ -14,7 +14,7 @@ const AddIncomeForm = ({ onAddIncome }) => {
   });
 
   const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState({ name: "", icon: "" });
+  const [newCategory, setNewCategory] = useState({ name: "", icon: "💰" });
   const [loading, setLoading] = useState(false);
 
   // 🟢 Fetch all income categories from DB
@@ -36,6 +36,7 @@ const AddIncomeForm = ({ onAddIncome }) => {
   useEffect(() => {
     fetchCategories();
   }, []);
+  
 
   const handleChange = (key, value) =>
     setIncome((prev) => ({ ...prev, [key]: value }));
@@ -104,18 +105,16 @@ const AddIncomeForm = ({ onAddIncome }) => {
       <div className="border rounded p-3 bg-gray-50 mt-2">
         <p className="text-sm font-semibold mb-2 text-gray-700">
           Add New Category
-        </p>
+        </p>        
         <div className="flex gap-2 items-center">
-          {/* <input
-            type="text"
-            placeholder="New category name"
-            value={newCategory.name}
-            onChange={(e) =>
-              setNewCategory((prev) => ({ ...prev, name: e.target.value }))
+          <EmojiPickerPopup
+            className="flex-none"
+            icon={newCategory.icon}
+            onSelect={(selectedIcon) =>
+              setNewCategory((prev) => ({ ...prev, icon: selectedIcon }))
             }
-            className="border rounded p-2 flex-1"
-          /> */}
-          <Input className="rounded p-2 flex-1"
+          />    
+          <Input className="rounded flex-none p-2 flex-1"
             value={newCategory.name}
             onChange = {(e) =>setNewCategory((prev) => ({ ...prev, name: e.target.value }))}
              placeholder="Freelance, Salary, etc."
@@ -126,18 +125,12 @@ const AddIncomeForm = ({ onAddIncome }) => {
             onClick={handleAddCategory}
             disabled={loading}
             className={`${
-              loading ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
-            } text-white px-3 py-2 rounded transition`}
+              loading ? "bg-gray" : "bg-[#875cf5]"
+            } text-white px-3 py-2 flex-auto cursor-pointer`}
           >
             {loading ? "Adding..." : "Add"}
           </button>
-        </div>
-        <EmojiPickerPopup
-          icon={newCategory.icon}
-          onSelect={(selectedIcon) =>
-            setNewCategory((prev) => ({ ...prev, icon: selectedIcon }))
-          }
-        />       
+        </div>   
       </div>
 
       {/* 🔹 Source input */}

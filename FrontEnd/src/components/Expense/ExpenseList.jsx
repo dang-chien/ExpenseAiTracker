@@ -3,7 +3,12 @@ import TransactionInfoCard from "../Cards/TransactionInfoCard";
 import { LuDownload } from "react-icons/lu";
 
 const ExpenseList = (props) => {
-    const { transactions, onDelete, onDownload } = props;
+    const { transactions, expenseCategories, onDelete, onDownload } = props;
+    const getCategoryIcon = (categoryId) => {
+        const category = expenseCategories.find((cat) => cat._id === categoryId);
+        console.log("Category for ID", categoryId, ":", category);
+        return category?.icon || "💰"
+    };
 
     return (
         <div className="card">
@@ -20,7 +25,7 @@ const ExpenseList = (props) => {
                     <TransactionInfoCard
                         key={expense._id}
                         title={expense.category}
-                        icon={expense.icon}
+                        icon={getCategoryIcon(expense.categoryId)}
                         date={moment(expense.date).format("Do MMM YYYY")}
                         amount={expense.amount}
                         type="expense"

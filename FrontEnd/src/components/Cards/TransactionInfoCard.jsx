@@ -7,7 +7,14 @@ import {
 
 const TransactionInfoCard = (props) => {
     const { title, icon, date, amount, type, hideDeleteBtn, onDelete } = props;
-
+    // 🧮 Format tiền tệ (mặc định en-US, bạn có thể đổi thành vi-VN)
+    const formatCurrency = (value) => {
+        if (value == null || isNaN(value)) return "0";
+        return new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        }).format(value);
+    };
     const getAmountStyles = () => {
         return type === 'income' ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
     };
@@ -40,7 +47,7 @@ const TransactionInfoCard = (props) => {
 
                     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}>
                         <h6 className="text-xs font-medium">
-                            {type === 'expense' ? '-' : '+'} ${amount}
+                            {type === 'expense' ? '-' : '+'} ${formatCurrency(amount)}
                         </h6>
                         {type === 'income' ? <LuTrendingUp /> : <LuTrendingDown />}
                     </div>

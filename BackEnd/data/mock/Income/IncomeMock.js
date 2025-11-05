@@ -4,49 +4,19 @@ require("dotenv").config({ path: path.resolve(__dirname, "../../../.env") });
 const mongoose = require("mongoose");
 const Income = require("../../../models/Income");
 const connectDB = require("../../../config/db");
+const Category = require("../../../models/Category");
 
 // 🧩 User ID cố định
-const USER_ID = "68e45fb9fc9a3ce15d848dd0";
-
-// 🧩 Danh sách Category ID (Income)
-const categoryIds = 
- [{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43f"
-  }
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d440"
-  }
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d441"
-  }
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d442"
-  }
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d443"
-  }
-}];
-
-const CATEGORY_IDS = categoryIds.map(cat => cat._id.$oid);
-console.log("📂 INCOME CATEGORY_IDS:", CATEGORY_IDS);
+const USER_ID = "690b5cc201b23a92a2b671b9";
 
 // 🧮 Random tiền thu nhập
-function getRandomAmount(min = 20000, max = 200000) {
+function getRandomAmount(min = 2000, max = 10000) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// 🗓️ Random ngày từ tháng 7 đến nay
+// 🗓️ Random ngày từ tháng 1 đến nay
 function randomDateBetweenJulyToNow() {
-  const start = new Date("2025-07-01T00:00:00Z");
+  const start = new Date("2025-01-01T00:00:00Z");
   const end = new Date();
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
@@ -58,6 +28,14 @@ async function seedIncomes() {
   try {
     await connectDB();
     console.log("🌐 Connected to MongoDB");
+
+    const categories = await Category.find({ type: "Income" }).select("_id name").lean();
+    const CATEGORY_IDS = categories.map(cat => cat._id);
+    console.log(`📂 Found ${CATEGORY_IDS.length} Income categories.`);
+
+    if (CATEGORY_IDS.length === 0) {
+      throw new Error("❌ No Income categories found. Please check Category collection.");
+    }
 
     const incomes = [];
 

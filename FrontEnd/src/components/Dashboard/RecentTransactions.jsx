@@ -2,6 +2,7 @@ import { LuArrowRight } from "react-icons/lu";
 import moment from "moment";
 import TransactionInfoCard from "../Cards/TransactionInfoCard";
 import EmptyTransactionInfoCard from "../Cards/EmptyTransactionInfoCard";
+import { formatCurrency } from "../../utils/helper";
 
 const RecentTransactions = (props) => {
     const { transactions, onSeeMore } = props;
@@ -28,7 +29,7 @@ const RecentTransactions = (props) => {
                             title={item.type === 'expense' ? item.categoryId?.name || 'Unknown' : item.source}
                             icon={item.categoryId?.icon || '💰'}
                             date={moment(item.date).format('Do MM YYYY')}
-                            amount={item.amount}
+                            amount={formatCurrency(item.amount)}
                             type={item.type}
                             hideDeleteBtn
                         />

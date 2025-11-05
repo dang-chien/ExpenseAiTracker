@@ -67,3 +67,11 @@ export const prepareExpenseLineChartData = (data = []) => {
 
   return chartData;
 };
+
+export const formatCurrency = (value) => {
+        if (value == null || isNaN(value)) return "0";
+        return new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+        }).format(value);
+    };

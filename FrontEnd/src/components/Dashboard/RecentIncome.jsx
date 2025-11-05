@@ -2,9 +2,12 @@ import { LuArrowRight } from "react-icons/lu";
 import TransactionInfoCard from "../Cards/TransactionInfoCard";
 import moment from "moment";
 import EmptyTransactionInfoCard from "../Cards/EmptyTransactionInfoCard";
+import { formatCurrency } from "../../utils/helper";
 
 const RecentIncome = (props) => {
     const { transactions, onSeeMore } = props;
+
+    console.log("RecentIncome transactions:", transactions);
 
     return (
         <div className="card">
@@ -27,7 +30,7 @@ const RecentIncome = (props) => {
                         <TransactionInfoCard
                             key={income._id}
                             title={income.source}
-                            icon={income.icon}
+                            icon={income.categoryId?.icon}
                             date={moment(income.date).format('Do MMM YYYY')}
                             amount={income.amount}
                             type="income"

@@ -154,13 +154,65 @@ def predict_next_month_by_group(df):
             std = np.std(residuals)
             confidence = 1.96 * std
 
+            # 🔍 Compare predicted vs last month spending
+            last_month_value = y.iloc[-1]
+            diff_ratio = (predicted - last_month_value) / last_month_value if last_month_value > 0 else 0
+
+            # 🎯 Generate more diverse insights
+            if diff_ratio > 0.2:
+                trend = "increasing_strong"
+                emoji = "🚨"
+                # EN: Sharp increase — warning user
+                # VI: Tăng mạnh — cảnh báo người dùng nên xem lại chi tiêu
+                message = (
+                    f"{emoji} Spending in **{group.lower()}** is projected to rise sharply (**+{diff_ratio:.1%}**) compared to last month. "
+                    "This could strain your budget — consider reviewing or reducing non-essential expenses."
+                )
+            elif 0.05 < diff_ratio <= 0.2:
+                trend = "increasing_mild"
+                emoji = "📈"
+                # EN: Slight increase — monitor spending
+                # VI: Tăng nhẹ — nên theo dõi để tránh vượt ngân sách
+                message = (
+                    f"{emoji} Spending in **{group.lower()}** is expected to increase slightly (**+{diff_ratio:.1%}**). "
+                    "Keep an eye on this category to ensure it stays within your limits."
+                )
+            elif -0.2 <= diff_ratio < -0.05:
+                trend = "decreasing_mild"
+                emoji = "📉"
+                # EN: Mild decrease — good progress
+                # VI: Giảm nhẹ — dấu hiệu tích cực, nên duy trì
+                message = (
+                    f"{emoji} Spending in **{group.lower()}** shows a moderate decrease (**{diff_ratio:.1%}**). "
+                    "Good progress — maintaining this trend can improve your savings rate."
+                )
+            elif diff_ratio < -0.2:
+                trend = "decreasing_strong"
+                emoji = "💪"
+                # EN: Strong decrease — excellent result
+                # VI: Giảm mạnh — kết quả rất tốt, người dùng kiểm soát chi tiêu hiệu quả
+                message = (
+                    f"{emoji} Excellent! Spending in **{group.lower()}** is projected to drop significantly (**{abs(diff_ratio):.1%}**). "
+                    "You're managing your budget efficiently — keep it up!"
+                )
+            else:
+                trend = "stable"
+                emoji = "⚖️"
+                # EN: Stable — consistent spending
+                # VI: Ổn định — chi tiêu đều đặn, tốt cho quản lý tài chính lâu dài
+                message = (
+                    f"{emoji} Spending in **{group.lower()}** is expected to remain stable, with no major fluctuations. "
+                    "Consistency is a key part of financial stability."
+                )
+
             results.append({
                 "group": group,
                 "predicted": round(predicted, 2),
                 "confidence": round(confidence, 2),
-                "message": "Prediction complete"
+                "trend": trend,
+                "emoji": emoji,
+                "message": message
             })
-
         return pd.DataFrame(results)
     except Exception as e:
         return pd.DataFrame([{"error": str(e)}])

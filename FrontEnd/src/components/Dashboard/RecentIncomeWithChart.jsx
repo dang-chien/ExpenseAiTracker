@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import CustomPieChart from "../Charts/CustomPieChart";
+import { formatCurrency } from "../../utils/helper";
 
-const COLORS = ['#875CF5', '#FA2C37', '#FF6900', '#4F39F6'];
+const COLORS = ['#875CF5', '#FA2C37', '#4F39F6'];
 
 const RecentIncomeWithChart = (props) => {
     const { data, totalIncome } = props;
 
     const [chartData, setChartData] = useState([]);
+
+    console.log("RecentIncomeWithChart data:", data);
+    
 
     useEffect(() => {
         const dataArr = data?.map((item) => ({
@@ -25,7 +29,7 @@ const RecentIncomeWithChart = (props) => {
             <CustomPieChart
                 data={chartData}
                 label="Total Income"
-                totalAmount={`$${totalIncome}`}
+                totalAmount={`$${formatCurrency(totalIncome)}`}
                 showTextAnchor
                 colors={COLORS}
             />

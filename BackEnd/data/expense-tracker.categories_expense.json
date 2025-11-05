@@ -1,60 +1,45 @@
 [{
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d436"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf72"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d437"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf73"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d438"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf74"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d439"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf75"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d43a"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf76"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d43b"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf77"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d43c"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf78"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d43d"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf79"
+  }
 },
 {
   "_id": {
-    "$oid": "69097c5348ff49a1adb2d43e"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097f1a3bd757220c933df7"
-  },
-  "type": "Expense"
+    "$oid": "690b6c70faa7387fb8dfaf7a"
+  }
 }]

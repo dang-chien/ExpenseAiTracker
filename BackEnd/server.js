@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const connectDB = require("./config/db");
+const initDefaultCategories = require("./utils/initDefaultCategories");
 const authRoutes = require("./routes/authRoutes");
 const incomeRoutes = require("./routes/incomeRoutes");
 const expenseRoutes = require("./routes/expenseRoutes");
@@ -23,7 +24,9 @@ app.use(
 
 app.use(express.json());
 
-connectDB();
+connectDB().then(() => {
+  initDefaultCategories(); 
+});
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/income", incomeRoutes);

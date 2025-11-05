@@ -48,7 +48,10 @@ const HomePage = () => {
     return (
         <DashboardLayout activeMenu="Dashboard">
             <div className="my-5 mx-auto">
+                
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+
                     <InfoCard
                         icon={<IoMdCard />}
                         label="Total Balance"
@@ -70,7 +73,9 @@ const HomePage = () => {
                         color="bg-red-500"
                     />
                 </div>
-
+                    <PredictSection
+                        expenses={dashboardData?.last180DaysExpenses?.transactions || []}
+                    />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                     <RecentTransactions
                         transactions={dashboardData?.recentTransactions || []}
@@ -91,20 +96,19 @@ const HomePage = () => {
                     {/* <Last30DaysExpenses
                         data={dashboardData?.last30DaysExpenses?.transactions || []}
                     /> */}
-                    <PredictSection
-                        expenses={dashboardData?.last180DaysExpenses?.transactions || []}
-                    />  
+                    
 
-                    <RecentIncomeWithChart
-                        data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}
+                    {/* <RecentIncomeWithChart
+                        data={dashboardData?.last60DaysIncome?.transactions?.slice(2, 4) || []}
                         totalIncome={dashboardData?.totalIncome || 0}
-                    />
+                    /> */}
 
                     <RecentIncome
                         transactions={dashboardData?.last60DaysIncome?.transactions || []}
                         onSeeMore={() => navigate("/income")}
                     />
                 </div>
+                
             </div>
         </DashboardLayout>
     );

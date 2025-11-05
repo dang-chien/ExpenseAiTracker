@@ -3,91 +3,37 @@ require("dotenv").config({ path: path.resolve(__dirname, "../../../.env") });
 
 const mongoose = require("mongoose");
 const Expense = require("../../../models/Expense");
+const Category = require("../../../models/Category");
 const connectDB = require("../../../config/db");
 
-// 🧩 User ID cố định
-const USER_ID = "68e45fb9fc9a3ce15d848dd0";
-
-// 🧩 Danh sách Category ID (chỉ cần string ID)
-const categoryIds = [{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d436"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d437"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d438"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d439"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43a"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43b"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43c"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43d"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097c5348ff49a1adb2d43e"
-  },
-  "type": "Expense"
-},
-{
-  "_id": {
-    "$oid": "69097f1a3bd757220c933df7"
-  },
-  "type": "Expense"
-}]
-const CATEGORY_IDS = categoryIds.map(cat => cat._id.$oid);
-console.log("📂 CATEGORY_IDS:", CATEGORY_IDS);
+// 🧩 ID người dùng cần seed
+const USER_ID = "690b5cc201b23a92a2b671b9";
 
 // 🧮 Hàm random tiện ích
-function getRandomAmount(min = 20000, max = 500000) {
+function getRandomAmount(min = 100, max = 5000) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// 🗓️ Sinh ngẫu nhiên ngày từ tháng 7 đến nay
+// 🗓️ Sinh ngẫu nhiên ngày từ tháng 1 đến tháng 6 năm 2025
 function randomDateBetweenJanuaryToNow() {
   const start = new Date("2025-01-01T00:00:00Z");
-  const end = new Date("2025-06-30T23:59:59Z");
+  const end = new Date("2025-10-30T23:59:59Z");
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 async function seedExpenses() {
   try {
-    await connectDB(); // ✅ phải có await
+    await connectDB();
     console.log("🌐 Connected to MongoDB");
+
+    // 🔹 Fetch Category IDs (chỉ các danh mục chi tiêu)
+    const categories = await Category.find({ type: "Expense" }).select("_id name").lean();
+    const CATEGORY_IDS = categories.map(cat => cat._id);
+    console.log(`📂 Found ${CATEGORY_IDS.length} Expense categories.`);
+
+    if (CATEGORY_IDS.length === 0) {
+      throw new Error("❌ No Expense categories found. Please check Category collection.");
+    }
 
     const expenses = [];
 
@@ -106,7 +52,6 @@ async function seedExpenses() {
       });
     }
 
-    // Thêm mới
     await Expense.insertMany(expenses);
     console.log(`✅ Inserted ${expenses.length} expenses for user ${USER_ID}`);
 

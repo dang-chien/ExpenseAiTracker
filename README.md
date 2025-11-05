@@ -72,7 +72,7 @@ E -->|Predictions / Insights| B
 | **Frontend**   | React 19, Vite, Tailwind CSS, Recharts, Axios      |
 | **Backend**    | Node.js, Express 5, MongoDB, Mongoose, JWT, Bcrypt |
 | **AI Service** | Python, Flask, Scikit-learn, Pandas, NumPy         |
-| **Tools**      | ESLint, Prettier, Nodemon, Concurrently            |
+| **Tools**      | Nodemon, Concurrently (ESLint/Prettier planned)            |
 
 ---
 
@@ -203,12 +203,12 @@ FLASK_AI_URL=http://localhost:5001
 🐙 [GitHub](https://github.com/dang-chien)
 ---
 **Duong Khac Nguyen Tung**
-📧 [...](mailto:...)
-🐙 [GitHub](https://github.com/)
+📧 [n22dccn018@student.ptithcm.edu.vn](mailto:n22dccn018@student.ptithcm.edu.vn)
+🐙 [GitHub](https://github.com/cownon)
 ---
 **Duy Dang Tran**
-📧 [...](mailto:...)
-🐙 [GitHub](https://github.com/...)
+📧 [dangduy04.it@gmail.com](mailto:dangduy04.it@gmail.com)
+🐙 [GitHub](https://github.com/DangDuy-it)
 ---
 
 ## 📄 License

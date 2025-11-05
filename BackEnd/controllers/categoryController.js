@@ -42,7 +42,10 @@ exports.getAllCategories = async (req, res) => {
   const userId = req.user.id;
 
   try {
-    const categories = await Category.find({ userId }).sort({ createdAt: -1 });
+    const categories = await Category.find({ $or: [
+        { userId },                   // category riêng của user
+        { userId: null }          
+      ] }).sort({ createdAt: -1 });
     res.status(200).json(categories);
   } catch (error) {
     console.error("Error fetching categories:", error);

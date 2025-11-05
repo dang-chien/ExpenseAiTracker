@@ -5,7 +5,8 @@ const CategorySchema = new mongoose.Schema(
         userId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
-            required: true
+            required: true,
+            default: null //Nếu là category chung thì userId sẽ là null
         },
         name: {
             type: String,

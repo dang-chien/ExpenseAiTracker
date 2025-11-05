@@ -26,8 +26,8 @@ const ExpenseTransactions = (props) => {
                     {transactions.slice(0, 5).map((expense) => (
                         <TransactionInfoCard
                             key={expense._id}
-                            title={expense.category}
-                            icon={expense.icon}
+                            title={expense.categoryId?.name || 'Unknown'}
+                            icon={expense.categoryId?.icon || '💸'}
                             date={moment(expense.date).format('Do MMM YYYY')}
                             amount={expense.amount}
                             type="expense"

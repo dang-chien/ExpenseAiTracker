@@ -1,0 +1,86 @@
+[
+    {
+        "userId": null,
+        "name": "Rent/Mortgage",
+        "type": "Expense",
+        "icon": "🏠"
+    },
+    {
+        "userId": null,
+        "name": "Utilities",
+        "type": "Expense",
+        "icon": "💡"
+    },
+    {
+        "userId": null,
+        "name": "Groceries",
+        "type": "Expense",
+        "icon": "🛒"
+    },
+    {
+        "userId": null,
+        "name": "Transportation",
+        "type": "Expense",
+        "icon": "🚗"
+    },
+    {
+        "userId": null,
+        "name": "Insurance",
+        "type": "Expense",
+        "icon": "🧾"
+    },
+    {
+        "userId": null,
+        "name": "Healthcare",
+        "type": "Expense",
+        "icon": "💊"
+    },
+    {
+        "userId": null,
+        "name": "Entertainment",
+        "type": "Expense",
+        "icon": "🎬"
+    },
+    {
+        "userId": null,
+        "name": "Shopping",
+        "type": "Expense",
+        "icon": "🛍️"
+    },
+    {
+        "userId": null,
+        "name": "Other",
+        "type": "Expense",
+        "icon": "🔖"
+    },
+    {
+        "userId": null,
+        "name": "Salary",
+        "type": "Income",
+        "icon": "💰"
+    },
+    {
+        "userId": null,
+        "name": "Bonus",
+        "type": "Income",
+        "icon": "🎁"
+    },
+    {
+        "userId": null,
+        "name": "Investment",
+        "type": "Income",
+        "icon": "📈"
+    },
+    {
+        "userId": null,
+        "name": "Gift",
+        "type": "Income",
+        "icon": "🎉"
+    },
+    {
+        "userId": null,
+        "name": "Other",
+        "type": "Income",
+        "icon": "🔖"
+    }
+]

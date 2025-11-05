@@ -10,6 +10,12 @@ const ExpenseList = (props) => {
         return category?.icon || "💰"
     };
 
+    const getCategoryName = (categoryId) => {
+        const category = expenseCategories.find((cat) => cat._id === categoryId);
+        console.log("Category for ID", categoryId, ":", category);
+        return category?.name || "Unknown";
+    };
+
     return (
         <div className="card">
             <div className="flex items-center justify-between">
@@ -24,7 +30,7 @@ const ExpenseList = (props) => {
                 {transactions?.map((expense) => (
                     <TransactionInfoCard
                         key={expense._id}
-                        title={expense.category}
+                        title={getCategoryName(expense.categoryId)}
                         icon={getCategoryIcon(expense.categoryId)}
                         date={moment(expense.date).format("Do MMM YYYY")}
                         amount={expense.amount}

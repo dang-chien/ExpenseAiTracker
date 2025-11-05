@@ -35,4 +35,9 @@ export const API_PATHS = {
     DELETE_CATEGORY: (categoryId) => `api/v1/category/${categoryId}`,
     DELETE_ALL_CATEGORY: "api/v1/category", // route DELETE /
   },
+  AI: {
+    PREDICT: "api/v1/ai/predict", // Gọi dự đoán chi tiêu từ Flask AI
+    EVALUATE: "api/v1/ai/evaluate", // (tùy chọn) Đánh giá chi tiêu tháng trước
+    SUGGEST: "api/v1/ai/suggest" // (tùy chọn) Gợi ý giảm chi tiêu
+  },
 };

@@ -25,8 +25,8 @@ const RecentTransactions = (props) => {
                     {transactions.slice(0, 5).map((item) => (
                         <TransactionInfoCard
                             key={item._id}
-                            title={item.type === 'expense' ? item.category : item.source}
-                            icon={item.icon}
+                            title={item.type === 'expense' ? item.categoryId?.name || 'Unknown' : item.source}
+                            icon={item.categoryId?.icon || '💰'}
                             date={moment(item.date).format('Do MM YYYY')}
                             amount={item.amount}
                             type={item.type}

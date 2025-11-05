@@ -7,7 +7,6 @@ const IncomeList = (props) => {
     
     const getCategoryIcon = (categoryId) => {
         const category = categories.find((cat) => cat._id === categoryId);
-        console.log("Category for ID", categoryId, ":", category);
         return category?.icon || "💰"
     };
 
@@ -23,7 +22,6 @@ const IncomeList = (props) => {
 
             <div className="grid grid-cols-1 mg:grid-cols-2">
                 {transactions?.map((income) => (
-                    console.log("Rendering income transaction:", income),
                     <TransactionInfoCard
                         key={income._id}
                         title={income.source}

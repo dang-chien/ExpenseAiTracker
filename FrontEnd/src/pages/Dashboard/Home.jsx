@@ -11,9 +11,11 @@ import { addThousandsSeparator } from "../../utils/helper";
 import RecentTransactions from "../../components/Dashboard/RecentTransactions";
 import FinanceOverview from "../../components/Dashboard/FinanceOverview";
 import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions";
-import Last30DaysExpenses from "../../components/Dashboard/Last30DaysExpenses";
+import Last180DaysExpenses from "../../components/Dashboard/Last180DaysExpenses";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
+import PredictSection from "../../components/Ai/PredictSection";
+
 
 const HomePage = () => {
     useUserAuth();
@@ -82,13 +84,16 @@ const HomePage = () => {
                     />
 
                     <ExpenseTransactions
-                        transactions={dashboardData?.last30DaysExpenses?.transactions || []}
+                        transactions={dashboardData?.last180DaysExpenses?.transactions || []}
                         onSeeMore={() => navigate("/expense")}
                     />
 
-                    <Last30DaysExpenses
+                    {/* <Last30DaysExpenses
                         data={dashboardData?.last30DaysExpenses?.transactions || []}
-                    />
+                    /> */}
+                    <PredictSection
+                        expenses={dashboardData?.last180DaysExpenses?.transactions || []}
+                    />  
 
                     <RecentIncomeWithChart
                         data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}

@@ -96,7 +96,6 @@ const IncomePage = () => {
     const deleteIncome = async (id) => {
         try {
             await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
-
             setOpenDeleteAlert({ show: false, data: null });
             toast.success("Income deleted successfully!");
             fetchIncomeTransactions();
